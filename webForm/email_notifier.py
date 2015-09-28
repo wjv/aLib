@@ -19,7 +19,7 @@ options:
 """
 
 def chomp(s):
-  return s.rstrip('\n');
+  return s.rstrip('\n')
 
 import json
 import sys
@@ -38,32 +38,32 @@ sender = 'sbsuser@bioaps01'
 recipient = 'schultz@eva.mpg.de,sequencing@eva.mpg.de,kelso@eva.mpg.de,udo_stenzel@eva.mpg.de,gabriel_renaud@eva.mpg.de'
 
 
-pathToConfig=sys.argv[0];
-pathToConfig=os.path.dirname(os.path.abspath(pathToConfig))+"/config.json";
+pathToConfig=sys.argv[0]
+pathToConfig=os.path.dirname(os.path.abspath(pathToConfig))+"/config.json"
 
 
 
 try:
-  fileHandleConf = open ( pathToConfig );
+  fileHandleConf = open ( pathToConfig )
 except IOError:
   print "Cannot open configuration json file "+pathToConfig
-  sys.exit(1);
+  sys.exit(1)
 
-jsonstringConf="";
+jsonstringConf=""
 while 1:
-  line = fileHandleConf.readline();
+  line = fileHandleConf.readline()
   if(not(line)):
     break
-  line = chomp(line);
-  jsonstringConf+=line;
-fileHandleConf.close();
+  line = chomp(line)
+  jsonstringConf+=line
+fileHandleConf.close()
 
-jsondataConf=json.loads(jsonstringConf);
+jsondataConf=json.loads(jsonstringConf)
 
 
 
-illuminawritedir = jsondataConf["illuminawritedir"];
-illuminareaddir  = jsondataConf["illuminareaddir"];
+illuminawritedir = jsondataConf["illuminawritedir"]
+illuminareaddir  = jsondataConf["illuminareaddir"]
 
 
 def get_diskfree(path):
@@ -159,15 +159,15 @@ while True:
           cycle_text = "+".join(map(str,reads_length))
           cycle_time = round(sum(reads_length)/10.+2)
 
-#          print str(ExperimentName)+"\n";
-#          print str(elem.split('_')[1])+"\n";
-#          print str(elem)+"\n";
-#          print str(cycle_time)+"\n";
-#          print str(cycle_text)+"\n";
-#          print str(ExperimenterName)+"\n";
-#          print str(DescriptionText)+"\n";
-#          print str(ProjectName)+"\n";
-          #sys.exit(1);
+#          print str(ExperimentName)+"\n"
+#          print str(elem.split('_')[1])+"\n"
+#          print str(elem)+"\n"
+#          print str(cycle_time)+"\n"
+#          print str(cycle_text)+"\n"
+#          print str(ExperimenterName)+"\n"
+#          print str(DescriptionText)+"\n"
+#          print str(ProjectName)+"\n"
+          #sys.exit(1)
 #          html_text = """<p> ======= THIS IS AN AUTOMATICALLY CREATED MESSAGE ======= </p>
 #          <p>Dear all,</p>
 #          <p>We started a new experiment (%s) on %s. The run id is <b>%s</b> and it will finish within about <b>%d hours</b> (%s cycles).</p>
@@ -179,18 +179,18 @@ while True:
 #          <p>If you have any questions feel free to contact us.</p>
 #          <p>Best regards,<br>
 #          SeqGroup</p>"""%(ExperimentName,elem.split('_')[1],elem,cycle_time,cycle_text,ExperimenterName,DescriptionText,ProjectName)
-          html_text = "";
-          html_text += "<p> ======= THIS IS AN AUTOMATICALLY CREATED MESSAGE ======= </p>";
-          html_text += "<p>Dear all,</p>";
-          html_text += "<p>We started a new experiment ("+str(ExperimentName)+") on "+str(elem.split('_')[1])+". The run id is <b>"+str(elem)+"</b> and it will finish within about <b>"+str(cycle_time)+" hours</b> ("+str(cycle_text)+" cycles).</p>";
-          html_text += "<p>Please fill out an analysis request for this run before the run finishes using the internal form available <a href=\"http://biofs05/~sbsuser/webform/form.php\">here</a>. ";
-          html_text += "<i>If this form is not available when the run finishes, your lanes will not be processed</i> </p>";
-          html_text += "<p>Operator/Contact:&nbsp;&nbsp;"+str(ExperimenterName)+"<br>";
-          html_text += "Comment:&nbsp;&nbsp;"+str(DescriptionText)+"</p>";
-          html_text += "<p>Library: "+str(ProjectName)+"</p>";
-          html_text += "<p>If you have any questions feel free to contact us.</p>";
-          html_text += "<p>Best regards,<br>";
-          html_text += "SeqGroup</p>";
+          html_text = ""
+          html_text += "<p> ======= THIS IS AN AUTOMATICALLY CREATED MESSAGE ======= </p>"
+          html_text += "<p>Dear all,</p>"
+          html_text += "<p>We started a new experiment ("+str(ExperimentName)+") on "+str(elem.split('_')[1])+". The run id is <b>"+str(elem)+"</b> and it will finish within about <b>"+str(cycle_time)+" hours</b> ("+str(cycle_text)+" cycles).</p>"
+          html_text += "<p>Please fill out an analysis request for this run before the run finishes using the internal form available <a href=\"http://biofs05/~sbsuser/webform/form.php\">here</a>. "
+          html_text += "<i>If this form is not available when the run finishes, your lanes will not be processed</i> </p>"
+          html_text += "<p>Operator/Contact:&nbsp;&nbsp;"+str(ExperimenterName)+"<br>"
+          html_text += "Comment:&nbsp;&nbsp;"+str(DescriptionText)+"</p>"
+          html_text += "<p>Library: "+str(ProjectName)+"</p>"
+          html_text += "<p>If you have any questions feel free to contact us.</p>"
+          html_text += "<p>Best regards,<br>"
+          html_text += "SeqGroup</p>"
 
           msg = MIMEText("""<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"><html><body>"""+html_text+"""</body></html>""")
           msg.set_type('text/html')
@@ -233,9 +233,9 @@ while True:
           if elem not in old_set:
             old_set.add(elem)
             notify=True
-            text += "A new run finished and is waiting for analysis\n\n   "+elem+"\n\n";
+            text += "A new run finished and is waiting for analysis\n\n   "+elem+"\n\n"
             if not os.path.exists(illuminareaddir+"/"+elem+"/Run.completed"):
-              open(illuminareaddir+"/"+elem+"/Run.completed", 'w').close();
+              open(illuminareaddir+"/"+elem+"/Run.completed", 'w').close()
 
           finished.append(elem)
       else:
